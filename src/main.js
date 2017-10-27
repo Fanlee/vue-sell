@@ -1,9 +1,32 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 import App from './App'
+import goods from 'components/goods/goods'
+import ratings from 'components/ratings/ratings'
+import seller from 'components/seller/seller'
+import './common/stylus/index.styl'
 
-/* eslint-disable no-new */
-// 上面注释的意思new一个对象的时候可以不赋值给一个变量， 可以单独通过配置这条规则来跳过检验
-new Vue({
-  el: 'body',
-  components: { App }
+Vue.use(VueRouter)
+Vue.use(VueResource)
+
+let app = Vue.extend(App)
+
+let router = new VueRouter({
+  linkActiveClass: 'active'
 })
+router.map({
+  '/goods': {
+    component: goods
+  },
+  '/ratings': {
+    component: ratings
+  },
+  '/seller': {
+    component: seller
+  }
+})
+
+router.start(app, '#app')
+
+router.go('/goods')
