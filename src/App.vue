@@ -12,11 +12,12 @@
         <a v-link="{path:'/seller'}">商家</a>
       </div>
     </div>
-    <router-view :seller="seller"></router-view>
+    <router-view :seller="seller" keep-alive></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {urlParse} from 'common/js/util'
   import header from 'components/header/header'
 
   const ERR_OK = 0
@@ -24,14 +25,19 @@
   export default {
     data() {
       return {
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParm = urlParse()
+            return queryParm.id
+          })()
+        }
       }
     },
     created() {
-      this.$http.get('/api/seller').then((res) => {
+      this.$http.get('/api/seller?id=' + this.seller.id).then((res) => {
         res = res.body
         if (res.errno === ERR_OK) {
-          this.seller = res.data
+          this.seller = Object.assign({}, this.seller, res.data)
         }
       })
     },

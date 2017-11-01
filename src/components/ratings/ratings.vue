@@ -35,7 +35,7 @@
             <div class="content">
               <h1 class="name">{{rating.username}}</h1>
               <div class="star-wrapper">
-                <star :size="24" :score="rating.scroll"></star>
+                <star :size="24" :score="rating.score"></star>
                 <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
               </div>
               <p class="text">{{rating.text}}</p>
@@ -200,6 +200,8 @@
         display flex
         padding 18px 0
         border-1px(rgba(7, 17, 27, 0.1))
+        &:last-child
+          border-none()
         .avatar
           flex 0 0 28px
           width 28px
