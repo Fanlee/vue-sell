@@ -1,5 +1,5 @@
 <template>
-  <div class="ratings" v-el:ratings>
+  <div class="ratings" ref="ratings">
     <div class="ratings-content">
       <div class="overview">
         <div class="overview-left">
@@ -25,7 +25,8 @@
         </div>
       </div>
       <split></split>
-      <ratingselect :select-type="selectType" :only-content="onlyContent" :ratings="ratings"></ratingselect>
+      <ratingselect :selectType="selectType" :onlyContent="onlyContent" :ratings="ratings" @select="selectRating"
+                    @toggle="toggleContent"></ratingselect>
       <div class="ratings-wrapper">
         <ul>
           <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in ratings" class="rating-item border-1px">
@@ -54,13 +55,14 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
-  import {formatDate} from 'common/js/date'
+  import { formatDate } from 'common/js/date'
+  import { getRatings } from 'api/ratings'
+  import { ERR_OK } from 'api/config'
   import star from 'components/star/star'
   import split from 'components/split/split'
   import ratingselect from 'components/ratingselect/ratingselect'
 
   const ALL = 2
-  const ERR_OK = 0
 
   export default {
     props: {
@@ -76,12 +78,12 @@
       }
     },
     created() {
-      this.$http.get('/api/ratings').then((res) => {
-        res = res.body
+      getRatings().then((res) => {
+        res = res.data
         if (res.errno === ERR_OK) {
           this.ratings = res.data
           this.$nextTick(() => {
-            this.scroll = new BScroll(this.$els.ratings, {
+            this.scroll = new BScroll(this.$refs.ratings, {
               click: true
             })
           })
@@ -98,6 +100,18 @@
         } else {
           return type === this.selectType
         }
+      },
+      selectRating(type) {
+        this.selectType = type
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
       }
     },
     events: {
