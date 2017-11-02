@@ -61,11 +61,10 @@
   import Vue from 'vue'
   import BScroll from 'better-scroll'
   import { formatDate } from 'common/js/date'
+  import { ALL } from 'api/config'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
   import split from 'components/split/split'
   import ratingselect from 'components/ratingselect/ratingselect'
-
-  const ALL = 2
 
   export default {
     props: {

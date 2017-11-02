@@ -57,12 +57,10 @@
   import BScroll from 'better-scroll'
   import { formatDate } from 'common/js/date'
   import { getRatings } from 'api/ratings'
-  import { ERR_OK } from 'api/config'
+  import { ERR_OK, ALL } from 'api/config'
   import star from 'components/star/star'
   import split from 'components/split/split'
   import ratingselect from 'components/ratingselect/ratingselect'
-
-  const ALL = 2
 
   export default {
     props: {
