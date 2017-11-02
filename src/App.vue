@@ -36,12 +36,17 @@
       }
     },
     created() {
-      getSeller(this.seller.id).then((res) => {
-        let data = res.data
-        if (data.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, data.data)
-        }
-      })
+      this._getSeller()
+    },
+    methods: {
+      _getSeller() {
+        getSeller(this.seller.id).then((res) => {
+          let data = res.data
+          if (data.errno === ERR_OK) {
+            this.seller = Object.assign({}, this.seller, data.data)
+          }
+        })
+      }
     },
     components: {
       'v-header': header
