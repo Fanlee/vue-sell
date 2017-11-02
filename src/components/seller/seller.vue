@@ -41,7 +41,7 @@
         </div>
         <ul v-if="seller.supports" class="supports">
           <li class="support-item border-1px" v-for="(item, index) in seller.supports">
-            <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+            <icon :type="seller.supports[index].type" :size="4"></icon>
             <span class="text">{{seller.supports[index].description}}</span>
           </li>
         </ul>
@@ -72,6 +72,7 @@
   import BScroll from 'better-scroll'
   import { saveToLocal, loadFromLocal } from 'common/js/store'
   import star from 'components/star/star'
+  import icon from 'components/icon/icon'
   import split from 'components/split/split'
 
   export default {
@@ -91,9 +92,6 @@
       favoriteText() {
         return this.favorite ? '已收藏' : '收藏'
       }
-    },
-    created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
     watch: {
       'seller'() {
@@ -148,6 +146,7 @@
     },
     components: {
       star,
+      icon,
       split
     }
   }
@@ -245,26 +244,8 @@
           border-1px(rgba(7, 17, 27, 0.1))
           &:last-child
             border-none()
-        .icon
-          display inline-block
-          vertical-align top
-          width 16px
-          height 16px
-          margin-right 6px
-          background-size 16px 16px
-          background-repeat no-repeat
-          &.decrease
-            bg-image('decrease_4')
-          &.discount
-            bg-image('discount_4')
-          &.guarantee
-            bg-image('guarantee_4')
-          &.invoice
-            bg-image('invoice_4')
-          &.special
-            bg-image('special_4')
-
         .text
+          margin-left 6px
           line-height 16px
           font-size 12px
           color rgb(7, 17, 27)

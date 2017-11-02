@@ -5,7 +5,7 @@
         <ul>
           <li v-for="(item, index) in goods" @click="selectMenu(index, $event)" :class="{'current':currentIndex===index}" class="menu-item">
           <span class="text border-1px">
-            <span v-show="item.type>0" :class="classMap[item.type]" class="icon"></span>{{item.name}}
+            <icon v-show="item.type>0" :type="item.type" :size="3"></icon>{{item.name}}
           </span>
           </li>
         </ul>
@@ -50,6 +50,7 @@
   import shopcart from 'components/shopcart/shopcart'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
   import food from 'components/food/food'
+  import icon from 'components/icon/icon'
 
   export default {
     props: {
@@ -66,7 +67,6 @@
       }
     },
     created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
       getGoods().then((res) => {
         res = res.data
         if (res.errno === ERR_OK) {
@@ -109,7 +109,6 @@
         }
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
         let el = foodList[index]
-        console.log(index)
         this.foodsScroll.scrollToElement(el, 300)
       },
       selectFood(food, event) {
@@ -155,7 +154,8 @@
     components: {
       shopcart,
       cartcontrol,
-      food
+      food,
+      icon
     }
   }
 </script>
@@ -188,26 +188,11 @@
           .text
             border-none()
         .icon
-          display inline-block
-          width 12px
-          height 12px
           margin-right 2px
-          background-size 12px 12px
-          background-repeat no-repeat
-          &.decrease
-            bg-image('decrease_3')
-          &.discount
-            bg-image('discount_3')
-          &.guarantee
-            bg-image('guarantee_3')
-          &.invoice
-            bg-image('invoice_3')
-          &.special
-            bg-image('special_3')
         .text
           display table-cell
-          width 56px
           vertical-align middle
+          width 56px
           border-1px(rgba(7, 17, 27, 0.1))
           font-size 12px
     .foods-wrapper

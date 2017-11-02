@@ -13,7 +13,7 @@
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
         <div v-if="seller.supports" class="support">
-          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+          <icon :type="seller.supports[0].type" :size="1"></icon>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
             </div>
             <ul v-if="seller.supports" class="supports">
               <li class="support-item" v-for="(item, index) in seller.supports">
-                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <icon :type="seller.supports[index].type" :size="2"></icon>
                 <span class="text">{{seller.supports[index].description}}</span>
               </li>
             </ul>
@@ -68,6 +68,7 @@
 
 <script type="text/ecmascript-6">
   import star from 'components/star/star'
+  import icon from 'components/icon/icon'
   export default {
     props: {
       seller: {
@@ -79,11 +80,9 @@
         detailShow: false
       }
     },
-    created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-    },
     components: {
-      star
+      star,
+      icon
     }
   }
 </script>
@@ -128,25 +127,9 @@
           line-height 12px
           font-size 12px
         .support
-          .icon
-            display inline-block
-            width 12px
-            height 12px
-            margin-right 4px
-            background-size 12px 12px
-            background-repeat no-repeat
-            &.decrease
-              bg-image('decrease_1')
-            &.discount
-              bg-image('discount_1')
-            &.guarantee
-              bg-image('guarantee_1')
-            &.invoice
-              bg-image('invoice_1')
-            &.special
-              bg-image('special_1')
           .text
             vertical-align top
+            margin-left 4px
             line-height 12px
             font-size 10px
       .support-count
@@ -199,7 +182,6 @@
       height 100%
       z-index -1
       filter blur(10px)
-
     .detail
       position fixed
       top 0
@@ -254,25 +236,8 @@
               font-size 0
               &:last-child
                 margin-bottom 0
-              .icon
-                display inline-block
-                vertical-align top
-                width 16px
-                height 16px
-                margin-right 16px
-                background-size 16px 16px
-                background-repeat no-repeat
-                &.decrease
-                  bg-image('decrease_2')
-                &.discount
-                  bg-image('discount_2')
-                &.guarantee
-                  bg-image('guarantee_2')
-                &.invoice
-                  bg-image('invoice_2')
-                &.special
-                  bg-image('special_2')
               .text
+                margin-left 16px
                 line-height 16px
                 font-size 12px
           .bulletin
